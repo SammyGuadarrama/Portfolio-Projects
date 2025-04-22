@@ -139,10 +139,10 @@ select location, date, total_cases, total_deaths, (total_deaths/nullif(total_cas
 from [Covid-19 Project].dbo.CovidDeaths
 where location = 'United States'
 
-create view PercentCasesperPopUS as
-select location, date, population, total_cases, (total_cases/population)*100 as CasesbyPopPercentage
+create view PercentCasesperPopbyCountry as
+select location, date, population, total_cases, (total_cases/nullif(population,0))*100 as CasesbyPopPercentage
 from [Covid-19 Project].dbo.CovidDeaths
-where location = 'United States'
+where continent != ''
 
 create view HighestDeathCountbyCountry as
 select location, max(total_deaths) as TotalDeathCount
